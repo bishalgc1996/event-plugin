@@ -8,3 +8,7 @@ Contributors: bishalgc
 <h3>Simple  Event display into WordPress Site :</h3>
 
 <h3>Features</h3>
+
+<h4>Screenshot</h4>
+
+<img src="/assets/images/event-plugin-image.png"/>
