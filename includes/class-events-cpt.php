@@ -573,17 +573,10 @@ $args = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 
             $start_date_str = get_post_meta(get_the_ID(), 'start_ts', true);
             $start_date_formated = date_i18n('F j Y', $start_date_str);
             $start_time = date_i18n('G:i', $start_date_str);
-<<<<<<< HEAD
-            $website = get_post_meta(get_the_ID(), 'iee_event_link', true);
-            $event_url = get_post_meta(get_the_ID(), 'iee_event_link', true);
-            $iee_options = get_option(ED_OPTIONS);
-            $time_format = isset($iee_options['time_format']) ? $iee_options['time_format'] : '12hours';
-=======
             $website = get_post_meta(get_the_ID(), 'ed_event_link', true);
             $event_url = get_post_meta(get_the_ID(), 'ed_event_link', true);
             $ed_options = get_option(ED_OPTIONS);
             $time_format = isset($ed_options['time_format']) ? $ed_options['time_format'] : '12hours';
->>>>>>> 59f78801489c7eebc5b09095bdab33bda4777067
             if ($time_format == '12hours') {
                 $start_time = date_i18n('h:i a', $start_date_str);
             } elseif ($time_format == '24hours') {
