@@ -118,6 +118,12 @@ class Shortcode_Listing_Table extends WP_List_Table
             'shortcode' => '<p class="iee_short_code">[events_display  col="2" posts_per_page="12" category="cat1" past_events="yes" order="desc" orderby="post_title" start_date="YYYY-MM-DD" end_date="YYYY-MM-DD"]</p>',
             'action' => "<button class='iee-btn-copy-shortcode button-primary' data-value='[events_display col=\"2\" posts_per_page=\"12\" category=\"cat1\" past_events=\"yes\" order=\"desc\" orderby=\"post_title\" start_date=\"YYYY-MM-DD\" end_date=\"YYYY-MM-DD\"]' >Copy</button>",
         );
+        $data[] = array(
+            'id' => 9,
+            'how_to_use' => 'Short-code for Event with filter',
+            'shortcode' => '<p class="iee_short_code">[events_display_filter]</p>',
+            'action' => "<button class='iee-btn-copy-shortcode button-primary' data-value='[events_display_filter]' >Copy</button>",
+        );
         return $data;
     }
 

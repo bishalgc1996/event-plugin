@@ -35,6 +35,7 @@ class Events_Cpt
             add_action('init', array($this, 'register_event_taxonomy'));
             add_action('add_meta_boxes', array($this, 'add_event_meta_boxes'));
             add_action('save_post', array($this, 'save_event_meta_boxes'), 10, 2);
+            add_filter('the_content', array($this, 'events_meta_before_content'));
             add_shortcode('events_display', array($this, 'events_archive'));
             add_shortcode('events_display_filter', array($this, 'events_archive_with_filter'));
         }
@@ -620,6 +621,33 @@ endwhile;
   </section>
   <?php
 }
+
+    /**
+     * render event information above event content
+     */
+    public function events_meta_before_content($content)
+    {
+        if (is_singular($this->event_posttype)) {
+            $event_details = $this->events_get_event_meta(get_the_ID());
+            $content = $event_details . $content;
+        }
+        return $content;
+    }
+
+    /**
+     * get meta information for event.
+     */
+    public function events_get_event_meta($event_id = '')
+    {
+
+        ob_start();
+
+        get_ed_template('ed-event-meta.php');
+
+        $event_meta_details = ob_get_contents();
+        ob_end_clean();
+        return $event_meta_details;
+    }
     public function events_slider()
     {
         $args1 = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'DESC');

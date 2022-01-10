@@ -2,7 +2,7 @@
 /**
  * The template for displaying all single Event meta
  */
-global $iee_events;
+global $ed_events;
 
 if (!isset($event_id) || empty($event_id)) {
     $event_id = get_the_ID();
@@ -12,11 +12,11 @@ $start_date_str = get_post_meta($event_id, 'start_ts', true);
 $end_date_str = get_post_meta($event_id, 'end_ts', true);
 $start_date_formated = date_i18n('F j', $start_date_str);
 $end_date_formated = date_i18n('F j', $end_date_str);
-$website = get_post_meta($event_id, 'iee_event_link', true);
+$website = get_post_meta($event_id, 'ed_event_link', true);
 $map_api_key = 'AIzaSyCmDwwCg3dGcorCUf0q59VYtyZ74xUxT1Q';
 
-$iee_options = get_option(IEE_OPTIONS);
-$time_format = isset($iee_options['time_format']) ? $iee_options['time_format'] : '12hours';
+$ed_options = get_option(ED_OPTIONS);
+$time_format = isset($ed_options['time_format']) ? $ed_options['time_format'] : '12hours';
 if ($time_format == '12hours') {
     $start_time = date_i18n('h:i a', $start_date_str);
     $end_time = date_i18n('h:i a', $end_date_str);
@@ -29,8 +29,8 @@ if ($time_format == '12hours') {
 }
 
 ?>
-<div class="iee_event_meta">
-  <div class="iee_organizermain">
+<div class="ed_event_meta">
+  <div class="ed_organizermain">
     <div class="details">
       <div class="titlemain"> <?php esc_html_e('Details', 'import-eventbrite-events');?> </div>
 
@@ -54,14 +54,14 @@ if (date('Y-m-d', $start_date_str) == date('Y-m-d', $end_date_str)) {
 }
 
 $eve_tags = $eve_cats = array();
-$event_categories = wp_get_post_terms($event_id, $iee_events->cpt->get_event_categroy_taxonomy());
+$event_categories = wp_get_post_terms($event_id, $ed_events->cpt->get_event_categroy_taxonomy());
 if (!empty($event_categories)) {
     foreach ($event_categories as $event_category) {
         $eve_cats[] = '<a href="' . esc_url(get_term_link($event_category->term_id)) . '">' . $event_category->name . '</a>';
     }
 }
 
-$event_tags = wp_get_post_terms($event_id, $iee_events->cpt->get_event_tag_taxonomy());
+$event_tags = wp_get_post_terms($event_id, $ed_events->cpt->get_event_tag_taxonomy());
 if (!empty($event_tags)) {
     foreach ($event_tags as $event_tag) {
         $eve_tags[] = '<a href="' . esc_url(get_term_link($event_tag->term_id)) . '">' . $event_tag->name . '</a>';
@@ -136,7 +136,7 @@ $venue_url = esc_url(get_post_meta($event_id, 'venue_url', true));
 
 if (!empty($venue_address) || (!empty($venue['lat']) && !empty($venue['lon']))) {
     ?>
-  <div class="iee_organizermain library">
+  <div class="ed_organizermain library">
     <div class="venue">
       <div class="titlemain"> <?php esc_html_e('Venue', 'import-eventbrite-events');?> </div>
       <p><?php echo $venue_name; ?></p>
