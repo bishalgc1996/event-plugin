@@ -50,11 +50,13 @@ if (!class_exists('Events_Display')):
                 self::$instance->setup_constants();
 
                 add_action('wp_enqueue_scripts', array(self::$instance, 'ed_enqueue_style'));
+                add_action('wp_enqueue_scripts', array(self::$instance, 'ed_enqueue_script'));
 
                 self::$instance->includes();
                 self::$instance->common = new Import_Events_Common();
 
                 self::$instance->cpt = new Events_Cpt();
+                self::$instance->admin = new Import_Events_Admin();
 
             }
             return self::$instance;
@@ -111,7 +113,12 @@ if (!class_exists('Events_Display')):
     {
 
             require_once ED_PLUGIN_DIR . 'includes/class-events-cpt.php';
+            require_once ED_PLUGIN_DIR . 'includes/class-import-events-list-table.php';
             require_once ED_PLUGIN_DIR . 'includes/class-events-common.php';
+            require_once ED_PLUGIN_DIR . 'includes/class-import-events-admin.php';
+            require_once ED_PLUGIN_DIR . 'includes/custom-rest-api-functions.php';
+            require_once ED_PLUGIN_DIR . 'includes/ajax-processor.php';
+            require_once ED_PLUGIN_DIR . 'blocks/eventbrite-events/index.php';
 
         }
 
@@ -119,6 +126,32 @@ if (!class_exists('Events_Display')):
     {
             $css_dir = ED_PLUGIN_URL . 'assets/css/';
             wp_enqueue_style('import-events-front', $css_dir . 'import-events.css', false, '');
+            wp_enqueue_style('import-events-front-bs', $css_dir . 'bootstrap.min.css', false, '');
+        }
+
+        /**
+         * Enqueue script front-end
+         *
+         * @access public
+         * @since 1.0.0
+         * @return void
+         */
+        public function ed_enqueue_script()
+    {
+
+            $js_dir = ED_PLUGIN_URL . 'assets/js/';
+
+            wp_enqueue_script('import-events-front-bs-js', $js_dir . 'bootstrap.min.js', false, '');
+
+            wp_enqueue_script('events-slider-js', $js_dir . 'jquery.cycle2.min.js', array('jquery'), '', false);
+
+            wp_enqueue_script('import-events-filter-js', $js_dir . 'ajax-script.js', array('jquery'), '', false);
+
+            wp_localize_script('import-events-filter-js', 'my_ajax_url', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+            ));
+
+            // enqueue script here.
         }
 
     }
