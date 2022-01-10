@@ -2,44 +2,29 @@
 
 add_action('rest_api_init', function () {
     register_rest_route('event-plugin/v1', 'posts', [
-        'methods' => 'GET',
+        'methods' => WP_REST_Server::READABLE,
         'callback' => 'wl_posts',
-        'args' => [
-            'page' => [
-                'description' => 'Current page',
-                'type' => "integer",
-            ],
-            'per_page' => [
-                'description' => 'Items per page',
-                'type' => "integer",
-            ],
-        ],
     ]);
 });
 
-function wl_posts()
+function wl_posts($request)
 {
     $args = [];
-
-    $big = 999999999; // need an unlikely integer
-
-    if (isset($_REQUEST['per_page'])) {
-        $args['posts_per_page'] = (int) $_REQUEST['per_page'];
+    if (isset($request['per_page'])) {
+        $args['posts_per_page'] = (int) $request['per_page'];
     } else {
-        $args['posts_per_page'] = 10;
+        $args['posts_per_page'] = 3;
     }
-    if (isset($_REQUEST['page'])) {
-        $args['page'] = (int) $_REQUEST['page'];
+    if (isset($request['page'])) {
+        $args['page'] = (int) $request['page'];
+    } else {
+        $args['page'] = 1;
     }
-
-    //Protect against arbitrary paged values
-    $paged = (get_query_var('paged')) ? absint(get_query_var('paged')) : 1;
-
-    $args = array(
-        'paged' => $paged,
-    );
 
     $args['post_type'] = 'events';
+    if ($args['page']) {
+        $args['offset'] = ($args['page'] - 1) * $args['posts_per_page'];
+    }
 
     $get_posts = new WP_Query;
     $posts = $get_posts->query($args);
@@ -59,12 +44,19 @@ function wl_posts()
 
     }
 
-    echo paginate_links(array(
+    return $data;
+
+    $json_data = array();
+
+    foreach ($posts as $post) {
+
+    }
+
+    $pagination_output = paginate_links(array(
         'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
         'format' => '?paged=%#%',
         'current' => max(1, get_query_var('paged')),
         'total' => $get_posts->max_num_pages,
     ));
 
-    return $data;
 }

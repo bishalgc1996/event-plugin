@@ -15,6 +15,11 @@ if (!defined('ABSPATH')) {
         <a href="<?php echo home_url() . '/wp-json/event-plugin/v1/posts'; ?>">
           <?php echo home_url() . '/wp-json/event-plugin/v1/posts'; ?></a>
       </h3>
+      <h3 class="ed-support-features-title">
+        <?php esc_attr_e('Parameter - page:', 'import-events');?>
+        <a href="<?php echo home_url() . '/wp-json/event-plugin/v1/posts?page=2'; ?>">
+          <?php echo home_url() . '/wp-json/event-plugin/v1/posts?page=2'; ?></a>
+      </h3>
     </div>
   </div>
 </div>

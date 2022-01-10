@@ -105,7 +105,6 @@ class Events_Cpt
         $end_minute = get_post_meta($post->ID, 'event_end_minute', true);
         $end_meridian = get_post_meta($post->ID, 'event_end_meridian', true);
         ?>
-
 <table class="ed_form_table">
   <thead>
     <tr>
@@ -139,7 +138,6 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
         $this->generate_dropdown('event_end', 'meridian', $end_meridian);
         ?>
       </td>
-
     </tr>
   </tbody>
 </table>
@@ -153,7 +151,6 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
       </th>
     </tr>
   </thead>
-
   <tbody>
     <tr>
       <td><?php _e('Venue', 'import-events');?>:</td>
@@ -194,7 +191,6 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
           value="<?php echo get_post_meta($post->ID, 'venue_country', true); ?>" />
       </td>
     </tr>
-
     <tr>
       <td><?php _e('Zipcode', 'import-events');?>:</td>
       <td>
@@ -202,8 +198,6 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
           value="<?php echo get_post_meta($post->ID, 'venue_zipcode', true); ?>" />
       </td>
     </tr>
-
-
     <tr>
       <td><?php _e('Website', 'import-events');?>:</td>
       <td>
@@ -213,7 +207,6 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
     </tr>
   </tbody>
 </table>
-
 <?php
 }
     public function generate_dropdown($start_end, $type, $selected = '')
@@ -469,7 +462,6 @@ $template_args = array();
                 get_ed_template('ed-archive-content.php', $template_args);
             endwhile; // End of the loop.
             if ($events_display->max_num_pages > 1): // custom pagination
-
                 ?>
   <div class="col-ed-md-12">
     <nav class="prev-next-posts">
@@ -608,8 +600,6 @@ if (get_the_post_thumbnail()) {?>
                   <li class="date"><?php echo $start_date_formated; ?></li>
                   <li class="time"><?php echo $start_time; ?></li>
                 </ul>
-
-
                 <?php
 if ($button_text) {
             echo '<div class="btn-wrap">
@@ -619,7 +609,6 @@ if ($button_text) {
         ?>
               </div>
             </div>
-
           </div>
           <?php
 endwhile;
@@ -629,31 +618,34 @@ endwhile;
       </div>
     </div>
   </section>
-
   <?php
 }
     public function events_slider()
     {
-        $args1 = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'ASC');
+        $args1 = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'DESC');
         $loop_slider = new WP_Query($args1);
         ?>
-  <div class="cycle-slideshow" data-cycle-fx="scrollHorz" data-cycle-pause-on-hover="true" data-cycle-speed="200">
-
+  <div class="cycle-slideshow" data-cycle-fx="scrollHorz" data-cycle-pause-on-hover="true" data-cycle-prev="#prev"
+    data-cycle-next="#next" data-cycle-caption="#alt-caption" data-cycle-caption-template="{{alt}}">
     <?php
-while ($loop_slider->have_posts()):
-            $loop_slider->the_post();
-            ?>
-    <a href="<?php the_permalink();?>">
-      <h3><?php the_title();?></h3>
-    </a>
-    <img src="<?php echo get_the_post_thumbnail_url(); ?>" />
+if ($loop_slider->have_posts()) {
+            while ($loop_slider->have_posts()):
+                $loop_slider->the_post();
+                ?>
 
+    <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo esc_html(get_the_title()); ?>" />
     <?php
 endwhile;
+            // Restore original post data.
+            wp_reset_postdata();
+        }
         ?>
   </div>
-
-
+  <div id="alt-caption" class="center"></div>
+  <div class="center">
+    <a href=# id="prev">Prev</a>
+    <a href=# id="next">Next</a>
+  </div>
   <?php
 }
 }

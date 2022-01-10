@@ -133,10 +133,6 @@ class Import_Events_Admin
             <?php esc_html_e('End Point', '-events');?>
           </a>
 
-          <a href="<?php echo esc_url(add_query_arg('tab', 'events-with-pagination', $this->adminpage_url)); ?>"
-            class="nav-tab <?php if ('events-with-pagination' === $tab) {echo 'nav-tab-active';}?>">
-            <?php esc_html_e('Events with pagination', '-events');?>
-          </a>
         </h1>
 
         <div class="import-events-page">
@@ -147,9 +143,6 @@ if ('shortcodes' === $tab) {
             require_once ED_PLUGIN_DIR . '/templates/admin/import-events-support.php';
         } elseif ('endpoint-url' === $tab) {
             require_once ED_PLUGIN_DIR . '/templates/admin/import-events-endpoint.php';
-        } elseif ('events-with-pagination' === $tab) {
-            require_once ED_PLUGIN_DIR . '/templates/admin/import-events-with-pagination.php';
-
         }
         ?>
           <div style="clear: both"></div>
