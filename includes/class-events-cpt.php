@@ -575,7 +575,7 @@ $args = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 
             $start_time = date_i18n('G:i', $start_date_str);
             $website = get_post_meta(get_the_ID(), 'iee_event_link', true);
             $event_url = get_post_meta(get_the_ID(), 'iee_event_link', true);
-            $iee_options = get_option(IEE_OPTIONS);
+            $iee_options = get_option(ED_OPTIONS);
             $time_format = isset($iee_options['time_format']) ? $iee_options['time_format'] : '12hours';
             if ($time_format == '12hours') {
                 $start_time = date_i18n('h:i a', $start_date_str);
