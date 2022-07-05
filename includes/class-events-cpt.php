@@ -9,9 +9,12 @@
  * @subpackage Event Plugin/includes
  */
 // Exit if accessed directly
+
+
 if (!defined('ABSPATH')) {
     exit;
 }
+
 class Events_Cpt
 {
     // The Events Calendar Event Taxonomy
@@ -343,6 +346,7 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
     public function events_archive($atts = array())
     {
         $current_date = current_time('timestamp');
+        $paged = '';
         if (is_front_page()) {
             $paged = (get_query_var('page') ? get_query_var('page') : 1);
         }
@@ -601,13 +605,7 @@ if (get_the_post_thumbnail()) {?>
                   <li class="date"><?php echo $start_date_formated; ?></li>
                   <li class="time"><?php echo $start_time; ?></li>
                 </ul>
-                <?php
-if ($button_text) {
-            echo '<div class="btn-wrap">
-                                    <a href="' . esc_url($website) . '" class="btn btn-border" target=”_blank”>' . $button_text . '</a>';
-            echo '</div>';
-        }
-        ?>
+
               </div>
             </div>
           </div>
@@ -639,41 +637,10 @@ endwhile;
      */
     public function events_get_event_meta($event_id = '')
     {
-
         ob_start();
-
         get_ed_template('ed-event-meta.php');
-
         $event_meta_details = ob_get_contents();
         ob_end_clean();
         return $event_meta_details;
     }
-    public function events_slider()
-    {
-        $args1 = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'DESC');
-        $loop_slider = new WP_Query($args1);
-        ?>
-  <div class="cycle-slideshow" data-cycle-fx="scrollHorz" data-cycle-pause-on-hover="true" data-cycle-prev="#prev"
-    data-cycle-next="#next" data-cycle-caption="#alt-caption" data-cycle-caption-template="{{alt}}">
-    <?php
-if ($loop_slider->have_posts()) {
-            while ($loop_slider->have_posts()):
-                $loop_slider->the_post();
-                ?>
-
-    <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo esc_html(get_the_title()); ?>" />
-    <?php
-endwhile;
-            // Restore original post data.
-            wp_reset_postdata();
-        }
-        ?>
-  </div>
-  <div id="alt-caption" class="center"></div>
-  <div class="center">
-    <a href=# id="prev">Prev</a>
-    <a href=# id="next">Next</a>
-  </div>
-  <?php
-}
 }

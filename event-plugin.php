@@ -26,167 +26,173 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 // If this file is called directly, abort.
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-if (!class_exists('Events_Display')):
+if ( ! class_exists( 'Events_Display' ) ):
 
-/**
- * Main  Events Display class
- */
-    class Events_Display
-{
+	/**
+	 * Main  Events Display class
+	 */
+	class Events_Display {
 
-        /** Singleton *************************************************************/
+		/** Singleton *************************************************************/
 
-        private static $instance;
+		private static $instance;
 
-        public static function instance()
-    {
+		public static function instance() {
 
-            if (!isset(self::$instance) && !(self::$instance instanceof Events_Display)) {
-                self::$instance = new Events_Display();
-                self::$instance->setup_constants();
+			if ( ! isset( self::$instance )
+			     && ! ( self::$instance instanceof Events_Display )
+			) {
+				self::$instance = new Events_Display();
+				self::$instance->setup_constants();
 
-                add_action('wp_enqueue_scripts', array(self::$instance, 'ed_enqueue_style'));
-                add_action('wp_enqueue_scripts', array(self::$instance, 'ed_enqueue_script'));
+				add_action( 'wp_enqueue_scripts',
+					array( self::$instance, 'ed_enqueue_style' ) );
+				add_action( 'wp_enqueue_scripts',
+					array( self::$instance, 'ed_enqueue_script' ) );
 
-                self::$instance->includes();
-                self::$instance->common = new Import_Events_Common();
+				self::$instance->includes();
+				self::$instance->common = new Import_Events_Common();
 
-                self::$instance->cpt = new Events_Cpt();
-                self::$instance->admin = new Import_Events_Admin();
+				self::$instance->cpt   = new Events_Cpt();
+				self::$instance->admin = new Import_Events_Admin();
 
-            }
-            return self::$instance;
-        }
+			}
 
-        private function __construct()
-    {
-            /* Do nothing here */
-        }
+			return self::$instance;
+		}
 
-        /**
-         * Setup plugins constants.
-         *
-         * @access private
-         * @since 1.0.0
-         * @return void
-         */
-        private function setup_constants()
-    {
-            // Plugin version.
-            if (!defined('ED_VERSION')) {
-                define('ED_VERSION', '1.0');
-            }
+		private function __construct() {
+			/* Do nothing here */
+		}
 
-            // Plugin folder Path.
-            if (!defined('ED_PLUGIN_DIR')) {
-                define('ED_PLUGIN_DIR', plugin_dir_path(__FILE__));
-            }
+		/**
+		 * Setup plugins constants.
+		 *
+		 * @access private
+		 * @return void
+		 * @since  1.0.0
+		 */
+		private function setup_constants() {
+			// Plugin version.
+			if ( ! defined( 'ED_VERSION' ) ) {
+				define( 'ED_VERSION', '1.0' );
+			}
 
-            // Plugin folder URL.
-            if (!defined('ED_PLUGIN_URL')) {
-                define('ED_PLUGIN_URL', plugin_dir_url(__FILE__));
-            }
+			// Plugin folder Path.
+			if ( ! defined( 'ED_PLUGIN_DIR' ) ) {
+				define( 'ED_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+			}
 
-            // Plugin root file.
-            if (!defined('ED_PLUGIN_FILE')) {
-                define('ED_PLUGIN_FILE', __FILE__);
-            }
+			// Plugin folder URL.
+			if ( ! defined( 'ED_PLUGIN_URL' ) ) {
+				define( 'ED_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+			}
 
-            // Options.
-            if (!defined('ED_OPTIONS')) {
-                define('ED_OPTIONS', 'event_display_options');
-            }
-        }
-        /**
-         * Include required files.
-         *
-         * @access private
-         * @since 1.0.0
-         * @return void
-         */
+			// Plugin root file.
+			if ( ! defined( 'ED_PLUGIN_FILE' ) ) {
+				define( 'ED_PLUGIN_FILE', __FILE__ );
+			}
 
-        private function includes()
-    {
+			// Options.
+			if ( ! defined( 'ED_OPTIONS' ) ) {
+				define( 'ED_OPTIONS', 'event_display_options' );
+			}
+		}
 
-            require_once ED_PLUGIN_DIR . 'includes/class-events-cpt.php';
-            require_once ED_PLUGIN_DIR . 'includes/class-import-events-list-table.php';
-            require_once ED_PLUGIN_DIR . 'includes/class-events-common.php';
-            require_once ED_PLUGIN_DIR . 'includes/class-import-events-admin.php';
-            require_once ED_PLUGIN_DIR . 'includes/custom-rest-api-functions.php';
-            require_once ED_PLUGIN_DIR . 'includes/ajax-processor.php';
-            require_once ED_PLUGIN_DIR . 'blocks/eventbrite-events/index.php';
+		/**
+		 * Include required files.
+		 *
+		 * @access private
+		 * @return void
+		 * @since  1.0.0
+		 */
 
-        }
+		private function includes() {
+			require_once ED_PLUGIN_DIR . 'includes/class-events-cpt.php';
+			require_once ED_PLUGIN_DIR
+			             . 'includes/class-import-events-list-table.php';
+			require_once ED_PLUGIN_DIR . 'includes/class-events-common.php';
+			require_once ED_PLUGIN_DIR
+			             . 'includes/class-import-events-admin.php';
+			require_once ED_PLUGIN_DIR
+			             . 'includes/custom-rest-api-functions.php';
+			require_once ED_PLUGIN_DIR . 'includes/ajax-processor.php';
+			require_once ED_PLUGIN_DIR . 'includes/custom-functions.php';
+		}
 
-        public function ed_enqueue_style()
-    {
-            $css_dir = ED_PLUGIN_URL . 'assets/css/';
-            wp_enqueue_style('import-events-front', $css_dir . 'import-events.css', false, '');
-            wp_enqueue_style('import-events-front-bs', $css_dir . 'bootstrap.min.css', false, '');
-        }
+		public function ed_enqueue_style() {
+			$css_dir = ED_PLUGIN_URL . 'assets/css/';
+			wp_enqueue_style( 'import-events-front',
+				$css_dir . 'import-events.css', false, '' );
+			wp_enqueue_style( 'import-events-front-bs',
+				$css_dir . 'bootstrap.min.css', false, '' );
+		}
 
-        /**
-         * Enqueue script front-end
-         *
-         * @access public
-         * @since 1.0.0
-         * @return void
-         */
-        public function ed_enqueue_script()
-    {
+		/**
+		 * Enqueue script front-end
+		 *
+		 * @access public
+		 * @return void
+		 * @since  1.0.0
+		 */
+		public function ed_enqueue_script() {
 
-            $js_dir = ED_PLUGIN_URL . 'assets/js/';
+			$js_dir = ED_PLUGIN_URL . 'assets/js/';
 
-            wp_enqueue_script('import-events-front-bs-js', $js_dir . 'bootstrap.min.js', false, '');
+			wp_enqueue_script( 'import-events-front-bs-js',
+				$js_dir . 'bootstrap.min.js', false, '' );
 
-            wp_enqueue_script('events-slider-js', $js_dir . 'jquery.cycle2.min.js', array('jquery'), '', false);
 
-            wp_enqueue_script('import-events-filter-js', $js_dir . 'ajax-script.js', array('jquery'), '', false);
+			wp_enqueue_script( 'events-slider-js',
+				$js_dir . 'jquery.cycle2.min.js', array( 'jquery' ), '',
+				false );
 
-            wp_localize_script('import-events-filter-js', 'my_ajax_url', array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-            ));
+			wp_enqueue_script( 'import-events-filter-js',
+				$js_dir . 'ajax-script.js', array( 'jquery' ), '',
+				false );
 
-            // enqueue script here.
-        }
+			wp_localize_script( 'import-events-filter-js', 'my_ajax_url', array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			) );
 
-    }
+			// enqueue script here.
+		}
+
+	}
 
 endif;
 
-function run_events_display()
-{
-    return Events_Display::instance();
+function run_events_display() {
+	return Events_Display::instance();
 }
+
 global $ed_events;
 $ed_events = run_events_display();
 
 /**
  * Get Import events setting options
  *
- * @since 1.0
- * @param string $type Option type.
+ * @param  string  $type  Option type.
+ *
  * @return array|bool Options.
+ * @since 1.0
  */
-function ed_get_import_options($type = '')
-{
-    $ed_options = get_option(ED_OPTIONS);
-    return $ed_options;
+function ed_get_import_options( $type = '' ) {
+	$ed_options = get_option( ED_OPTIONS );
+
+	return $ed_options;
 }
 
-function ed_events_display_activate()
-{
+function ed_events_display_activate() {
 
-    if (version_compare(get_bloginfo('version'), '3.1', ' < ')) {
-        deactivate_plugins(basename(__FILE__)); // Deactivate our plugin
-    }
-    global $ed_events;
-    $ed_events->cpt->register_event_post_type();
-    flush_rewrite_rules();
+	global $ed_events;
+	$ed_events->cpt->register_event_post_type();
+	flush_rewrite_rules();
 
 }
-register_activation_hook(__FILE__, 'ed_events_display_activate');
+
+register_activation_hook( __FILE__, 'ed_events_display_activate' );
