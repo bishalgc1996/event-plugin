@@ -4,3 +4,9 @@
 /sitemap.xml
 /sitemap.xml.gz
 /.txt
+/.json
+
+/gutenberg/node_modules
+/node_modules
+/.babelrc
+
