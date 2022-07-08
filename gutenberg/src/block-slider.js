@@ -7,6 +7,8 @@ const { InspectorControls } = wp.blockEditor;
 const { Placeholder,PanelBody, RangeControl } = wp.components;
 const BlockEdit = (props) => {
     const { attributes, setAttributes } = props;
+
+
     return(
         <div className={props.className}>
             <InspectorControls>
@@ -23,9 +25,7 @@ const BlockEdit = (props) => {
                     />
                 </PanelBody>
             </InspectorControls>
-            <Placeholder
-                label={__('Slider ', 'awp')}
-            >
+            <Placeholder label={__('Slider ', 'ep')}>
             </Placeholder>
         </div>
     );
@@ -54,3 +54,5 @@ registerBlockType('ep/slider', {
         return null;
     }
 });
+
+

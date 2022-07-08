@@ -25,6 +25,7 @@ class Events_Cpt
     protected $event_category;
     // Event post type.
     protected $event_tag;
+
     public function __construct()
     {
         $this->event_slug = 'event_display';
@@ -43,6 +44,7 @@ class Events_Cpt
             add_shortcode('events_display_filter', array($this, 'events_archive_with_filter'));
         }
     }
+
     /**
      * get Events Post type
      *
@@ -57,6 +59,7 @@ class Events_Cpt
      *
      * @since    1.0.0
      */
+
     public function get_event_categroy_taxonomy()
     {
         return $this->event_category;
@@ -66,6 +69,7 @@ class Events_Cpt
      *
      * @since    1.0.0
      */
+
     public function get_event_tag_taxonomy()
     {
         return $this->event_tag;
@@ -75,6 +79,7 @@ class Events_Cpt
      *
      * @since    1.0.0
      */
+
     public function register_event_post_type()
     {
         /*
@@ -85,6 +90,8 @@ class Events_Cpt
         $event_cpt_args = array('label' => __('Events', 'import-events'), 'description' => __('Post type for Events', 'import-events'), 'labels' => $event_labels, 'supports' => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions'), 'taxonomies' => array($this->event_category, $this->event_tag), 'hierarchical' => false, 'public' => true, 'show_ui' => true, 'show_in_menu' => true, 'menu_position' => 5, 'menu_icon' => 'dashicons-calendar', 'show_in_admin_bar' => true, 'show_in_nav_menus' => true, 'can_export' => true, 'has_archive' => true, 'exclude_from_search' => false, 'publicly_queryable' => true, 'rewrite' => $rewrite);
         register_post_type($this->event_posttype, $event_cpt_args);
     }
+
+
     public function register_event_taxonomy()
     {
         /* Register the Event Category taxonomy. */
@@ -94,10 +101,12 @@ class Events_Cpt
             /* Labels used when displaying taxonomy and terms. */
             'labels' => array('name' => __('Event Tags', 'import-events'), 'singular_name' => __('Event Tag', 'import-events'), 'menu_name' => __('Event Tags', 'import-events'), 'name_admin_bar' => __('Event Tag', 'import-events'), 'search_items' => __('Search Tags', 'import-events'), 'popular_items' => __('Popular Tags', 'import-events'), 'all_items' => __('All Tags', 'import-events'), 'edit_item' => __('Edit Tag', 'import-events'), 'view_item' => __('View Tag', 'import-events'), 'update_item' => __('Update Tag', 'import-events'), 'add_new_item' => __('Add New Tag', 'import-events'), 'new_item_name' => __('New Tag Name', 'import-events'), 'separate_items_with_commas' => __('Separate tags with commas', 'import-events'), 'add_or_remove_items' => __('Add or remove tags', 'import-events'), 'choose_from_most_used' => __('Choose from the most used tags', 'import-events'), 'not_found' => __('No tags found', 'import-events'), 'parent_item' => null, 'parent_item_colon' => null)));
     }
+
     public function add_event_meta_boxes()
     {
         add_meta_box('events_metabox', __('Events Details', 'import-events'), array($this, 'render_event_meta_boxes'), array($this->event_posttype), 'normal', 'high');
     }
+
     public function render_event_meta_boxes($post)
     {
         // Use nonce for verification
@@ -213,6 +222,7 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
 </table>
 <?php
 }
+
     public function generate_dropdown($start_end, $type, $selected = '')
     {
         if ($start_end == '' || $type == '') {
@@ -307,11 +317,7 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
         $venue_lat = isset($_POST['venue_lat']) ? sanitize_text_field($_POST['venue_lat']) : '';
         $venue_lon = isset($_POST['venue_lon']) ? sanitize_text_field($_POST['venue_lon']) : '';
         $venue_url = isset($_POST['venue_url']) ? esc_url($_POST['venue_url']) : '';
-        // Oraganizer Deatails
-        $organizer_name = isset($_POST['organizer_name']) ? sanitize_text_field($_POST['organizer_name']) : '';
-        $organizer_email = isset($_POST['organizer_email']) ? sanitize_text_field($_POST['organizer_email']) : '';
-        $organizer_phone = isset($_POST['organizer_phone']) ? sanitize_text_field($_POST['organizer_phone']) : '';
-        $organizer_url = isset($_POST['organizer_url']) ? esc_url($_POST['organizer_url']) : '';
+
         // Save Event Data
         // Date & Time
         update_post_meta($post_id, 'event_start_date', $event_start_date);
@@ -334,11 +340,7 @@ $this->generate_dropdown('event_end', 'hour', $end_hour);
         update_post_meta($post_id, 'venue_lat', $venue_lat);
         update_post_meta($post_id, 'venue_lon', $venue_lon);
         update_post_meta($post_id, 'venue_url', $venue_url);
-        // Organizer
-        update_post_meta($post_id, 'organizer_name', $organizer_name);
-        update_post_meta($post_id, 'organizer_email', $organizer_email);
-        update_post_meta($post_id, 'organizer_phone', $organizer_phone);
-        update_post_meta($post_id, 'organizer_url', $organizer_url);
+
     }
     /**
      * render events lisiting.
@@ -495,130 +497,22 @@ do_action('ed_after_event_list', $events_display);
         }
         return $wp_list_events;
     }
+
+
     public function events_archive_with_filter()
     {
-        ?>
-  <section class="section events-listing-block">
-    <div class="container">
-      <div class="listing-filter-block events-filter-block">
-        <div class="row d-flex justify-content-center">
-          <div class="col">
-            <div class="col-wrap">
-              <label for="locations">Event Type</label>
-              <div class="select-wrap">
-                <select id="event-type">
-                  <option value="all" selected> All Type</option>
-                  <?php
-$args = array('taxonomy' => 'events_type', 'hide_empty' => false);
-        $categories = get_terms($args);
-        if ($categories):
-            foreach ($categories as $category) {
-                ?>
-                  <option value="<?php echo $category->slug; ?>">
-                    <?php echo $category->name; ?>
-                  </option>
-                  <?php
-    }
-        endif;?>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="col-wrap">
-              <label for="events">Month</label>
-              <div class="select-wrap">
-                <select id="event-month">
-                  <option value="all" selected>Month</option>
-                  <?php
-$args = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'ASC');
-        $loop_one = new WP_Query($args);
-        if ($loop_one->have_posts()) {
-            $date_array = array();
-            while ($loop_one->have_posts()):
-                $loop_one->the_post();
-                $start_date = get_post_meta(get_the_ID(), 'event_start_date', true);
-                $start_date_str = get_post_meta(get_the_ID(), 'start_ts', true);
-                $end_date_str = get_post_meta(get_the_ID(), 'end_ts', true);
-                $start_date_formated = date_i18n('F j', $start_date_str);
-                if ($start_date_formated && !in_array($start_date_formated, $date_array)) {
-                    array_push($date_array, $month['name']);
-                    $date_array[] = $start_date_formated;
-                    ?>
-                  <option value="<?php echo $start_date; ?>"><?php echo $start_date_formated; ?></option>
-                  <?php
-    }
-                wp_reset_postdata();
-            endwhile;
-        }?>
-                  <!--option value="in-person">In Person</option-->
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="events-listing">
-        <div class="row d-flex" data-js-filter="target">
-          <?php
-$args = array('post_type' => 'events', 'post_status' => 'publish', 'orderby' => 'date', 'order' => 'ASC');
-        $loop = new WP_Query($args);
-        while ($loop->have_posts()):
-            $loop->the_post();
-            $venue['state'] = get_post_meta(get_the_ID(), 'venue_state', true);
-            $venue_address = get_post_meta(get_the_ID(), 'venue_address', true);
-            $start_date_str = get_post_meta(get_the_ID(), 'start_ts', true);
-            $start_date_formated = date_i18n('F j Y', $start_date_str);
-            $start_time = date_i18n('G:i', $start_date_str);
-            $website = get_post_meta(get_the_ID(), 'ed_event_link', true);
-            $event_url = get_post_meta(get_the_ID(), 'ed_event_link', true);
-            $ed_options = get_option(ED_OPTIONS);
-            $time_format = isset($ed_options['time_format']) ? $ed_options['time_format'] : '12hours';
-            if ($time_format == '12hours') {
-                $start_time = date_i18n('h:i a', $start_date_str);
-            } elseif ($time_format == '24hours') {
-            $start_time = date_i18n('G:i', $start_date_str);
-        } else {
-            $start_time = date_i18n(get_option('time_format'), $start_date_str);
-        }
-        ?>
-          <div class="col card-event">
-            <div class="card-wrap">
-              <div class="img-wrap">
-                <?php
-if (get_the_post_thumbnail()) {?>
-                <a href="<?php echo $event_url; ?>"> <?php the_post_thumbnail('eventlisting-size');?>
-                </a>
-                <?php
-} else {?>
-                <a href="<?php echo $event_url; ?>"><img
-                    src="<?php echo ED_PLUGIN_URL . 'assets/images/dummy-event.png'; ?>" width="408" height="209"></a>
-                <?php
-}
-        ?>
-              </div>
-              <div class="text">
-                <h3>
-                  <a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title(); ?></a>
-                </h3>
-                <ul>
-                  <li class="date"><?php echo $start_date_formated; ?></li>
-                  <li class="time"><?php echo $start_time; ?></li>
-                </ul>
 
-              </div>
-            </div>
-          </div>
-          <?php
-endwhile;
-        wp_reset_postdata();
-        ?>
-        </div>
-      </div>
-    </div>
-  </section>
-  <?php
-}
+
+	    ob_start();
+	    // include template with the arguments (The $args parameter was added in v5.5.0)
+	    get_ed_template('ed-filter-page.php');
+
+	    return ob_get_clean();
+
+
+
+    }
+
 
     /**
      * render event information above event content
@@ -644,3 +538,4 @@ endwhile;
         return $event_meta_details;
     }
 }
+

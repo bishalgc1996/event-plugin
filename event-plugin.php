@@ -5,7 +5,7 @@ Plugin URI: #
 Description: It is a simple event plugin
 Version: 1.0
 Author: Bishal GC
-Author URI: bishalgc.com.np
+Author URI: bishalgc.com
  */
 
 /* Copyright Bishal GC (email : gcbishal03@gmail.com)
@@ -151,6 +151,7 @@ if ( ! class_exists( 'Events_Display' ) ):
 				$js_dir . 'jquery.cycle2.min.js', array( 'jquery' ), '',
 				false );
 
+
 			wp_enqueue_script( 'import-events-filter-js',
 				$js_dir . 'ajax-script.js', array( 'jquery' ), '',
 				false );
@@ -159,7 +160,8 @@ if ( ! class_exists( 'Events_Display' ) ):
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 			) );
 
-			// enqueue script here.
+
+
 		}
 
 	}
