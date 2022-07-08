@@ -2,6 +2,10 @@
 
 <p>Contributors: Bishalgc</p>
 
+<p>My Website:</p>
+
+<a href="https://bishalgc.com/"></a>
+
 <h3> Description </h3>
 
 <p> This is a event display wordpress plugin i have designed and developed for my task. <br>Please donot use this for commercial purpose </p>
