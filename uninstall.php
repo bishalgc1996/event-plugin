@@ -13,10 +13,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit();
 }
 
-// If uninstall not called from WordPress, then exit.
-if (!defined('WP_UNINSTALL_PLUGIN')) {
-    exit;
-}
+
 
 // Delete option from options table
 delete_option('ep_myplugin_options');
