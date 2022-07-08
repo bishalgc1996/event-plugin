@@ -124,7 +124,7 @@ const BlockEdit = props => {
     min: 1,
     max: 10
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Placeholder, {
-    label: __('Slider ', 'awp')
+    label: __('Slider ', 'ep')
   }));
 };
 

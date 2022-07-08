@@ -5,8 +5,6 @@
       e.preventDefault();
       var cf = $("#event-type").find("option:selected").val();
       var cfd = $("#event-month").find("option:selected").val();
-      console.log(cf);
-      console.log(cfd);
       $.ajax({
         url: my_ajax_url.ajax_url,
         data: { action: "filter", customfield: cf, customfieldone: cfd },

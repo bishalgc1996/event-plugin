@@ -82,30 +82,7 @@ function filter_ajax() {
                         <li class="date"><?php echo $start_date_formated; ?></li>
                         <li class="time"><?php echo $start_time; ?></li>
                     </ul>
-					<?php
-					if ( $link_text ) {
-						?>
-                        <a href="javascript(;) " class="read-more" data-fancybox
-                           data-src="#team<?php echo $counter1; ?>"><?php echo $link_text; ?> </a>
-						<?php
-					} else { ?>
-                        <a href="javascript(;) " class="read-more" data-fancybox
-                           data-src="#team<?php echo $counter1; ?>">More
-                            info</a>
-						<?php
-					}
-					if ( $button_text ) {
-						echo '<div class="btn-wrap">
-                                    <a href="' . esc_url( $website )
-						     . '" class="btn btn-border" target=”_blank”>'
-						     . $button_text . '</a>';
-						echo '</div>';
-					} else {
-						echo '<div class="btn-wrap">
-											<a href="' . esc_url( $website ) . '" class="btn btn-border" target=”_blank”>Register</a>
-										</div>';
-					}
-					?>
+
                 </div>
             </div>
 
@@ -116,3 +93,5 @@ function filter_ajax() {
 	wp_reset_postdata();
 	die();
 }
+
+

@@ -26,11 +26,18 @@ function gb_block() {
 function ep_gutenberg_slider_render($attributes, $content) {
 
 
+
 	$postQuery = new WP_Query([
 		'post_type' => 'events',
-		'posts_per_page' => $attributes['numSlides']
+		'posts_per_page' => $attributes['numSlides'],
+		'orderby'   => array(
+			'date' =>'DESC',
+			'menu_order'=>'ASC',
+		)
 
 	]);
+
+
 
 
 	if ($postQuery->have_posts()) {
@@ -40,6 +47,7 @@ function ep_gutenberg_slider_render($attributes, $content) {
     data-cycle-prev="#prev"
     data-cycle-next="#next">';
 
+
 		while ($postQuery->have_posts()) {
 			$postQuery->the_post();
 			if (has_post_thumbnail()) {
@@ -47,13 +55,17 @@ function ep_gutenberg_slider_render($attributes, $content) {
 				$output .= '<img src="' . $img_url . '" />';
 				$output .= '<h1>'.get_the_title().'</h1>';
 			}
+
 		}
-		?>
-		<div class="center">
+
+        $output .= '<div class="center">
     <a href=# id="prev">Prev</a>
     <a href=# id="next">Next</a>
-</div>
-<?php
+</div>';
+
+
+
+
 		wp_reset_postdata();
 		$output .= '</div>';
 		$output .= '</div>';
