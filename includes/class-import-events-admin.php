@@ -49,7 +49,7 @@ class Import_Events_Admin
     public function add_menu_pages()
     {
 
-        add_menu_page(__('Events Display', 'import-events'), __('Event Display Plugin Page', 'import-events'), 'manage_options', 'event_display_page', array($this, 'admin_page'), 'dashicons-calendar-alt', '30');
+        add_menu_page(__('Events Display', 'import-events'), __('Event Display Settings', 'import-events'), 'manage_options', 'event_display_page', array($this, 'admin_page'), 'dashicons-calendar-alt', '30');
     }
 
     /**
