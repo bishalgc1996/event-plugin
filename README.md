@@ -25,6 +25,7 @@ https://bishalgc.com
 <p>Upload the plugin to plugins directory on your wordpress installation</p>
 <p>Create Events in Events Page from the menu</p>
 
+
 <h4>Screenshot</h4>
 
 <img src="/assets/images/event-plugin-image.png"/>

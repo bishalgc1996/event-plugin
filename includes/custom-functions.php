@@ -44,30 +44,26 @@ function ep_gutenberg_slider_render($attributes, $content) {
 		$output = '<div class="wp-block-ep-slider align' . $attributes['align'] . '">';
 		$output .= '<div class="cycle-slideshow" data-cycle-fx="scrollHorz"
     data-cycle-timeout="5000"
-    data-cycle-prev="#prev"
-    data-cycle-next="#next">';
+  data-cycle-caption="#alt-caption"
+    data-cycle-caption-template="{{alt}}">';
 
 
 		while ($postQuery->have_posts()) {
 			$postQuery->the_post();
 			if (has_post_thumbnail()) {
 				$img_url = get_the_post_thumbnail_url(get_the_ID(), 'loop-thumbnail');
-				$output .= '<img src="' . $img_url . '" />';
-				$output .= '<h1>'.get_the_title().'</h1>';
+				$title = get_the_title();
+				$output .= '<img src="' . $img_url . '" alt="'.$title.'" />';
 			}
 
 		}
 
-        $output .= '<div class="center">
-    <a href=# id="prev">Prev</a>
-    <a href=# id="next">Next</a>
-</div>';
 
 
 
 
 		wp_reset_postdata();
-		$output .= '</div>';
+		$output .= '<div id="alt-caption" class="center"></div>  </div>';
 		$output .= '</div>';
 
 		return $output;
