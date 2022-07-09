@@ -43,7 +43,7 @@ function ep_gutenberg_slider_render($attributes, $content) {
 	if ($postQuery->have_posts()) {
 		$output = '<div class="wp-block-ep-slider align' . $attributes['align'] . '">';
 		$output .= '<div class="cycle-slideshow" data-cycle-fx="scrollHorz"
-    data-cycle-timeout="5000"
+    data-cycle-timeout="3000"
   data-cycle-caption="#alt-caption"
     data-cycle-caption-template="{{alt}}">';
 
