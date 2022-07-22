@@ -1,11 +1,13 @@
 <?php
 /*
-Plugin Name: Event Plugin
-Plugin URI: #
-Description: It is a simple event plugin
-Version: 1.0
-Author: Bishal GC
-Author URI: bishalgc.com
+* Plugin Name: Event Plugin
+* Plugin URI: #
+* Description: It is a simple event plugin
+*  Version: 1.0
+* Requires at least: 6.1
+* Requires PHP:  8.0
+* Author: Bishal GC
+* Author URI: bishalgc.com
  */
 
 /* Copyright Bishal GC (email : gcbishal03@gmail.com)
